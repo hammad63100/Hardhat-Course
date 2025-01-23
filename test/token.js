@@ -55,7 +55,17 @@ describe('Token contract', function () {
 
             it('Should update balance after transfers', async () => {
                 const initialOwnerBalance = await hardhatToken.balanceOf(owner.address);
-                 
+                 await hardhatToken.transfer(addr1.address, 5);
+                    await hardhatToken.transfer(addr2.address, 10);
+
+                const finalOwnerBalance = await hardhatToken.balanceOf(owner.address);
+                expect(finalOwnerBalance.toNumber()).to.equal(initialOwnerBalance.toNumber() - 15);
+
+                const addr1Balance = await hardhatToken.balanceOf(addr1.address);
+                expect(addr1Balance.toNumber()).to.equal(5);
+
+                const addr2Balance = await hardhatToken.balanceOf(addr2.address);
+                expect(addr2Balance.toNumber()).to.equal(10);
             });
             
         });
